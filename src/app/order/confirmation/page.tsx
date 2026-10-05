@@ -3,7 +3,7 @@
 import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Home, MessageCircle, Smartphone, CreditCard, Package, CheckCircle2 } from "lucide-react";
+import { Home, MessageCircle, Smartphone, CreditCard, Package, CheckCircle2, MapPin } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { CONTACT_NUMBERS, WA_MESSAGE } from "@/lib/types";
@@ -108,10 +108,12 @@ function ConfirmationInner() {
 
   const waLink = `https://wa.me/${CONTACT_NUMBERS[0].wa.replace("+", "")}?text=${WA_MESSAGE}`;
 
+  const PICKUP_LOCATION = "Adama Akuredza Avenue, Dzorwulu, Accra, Ghana";
+
   const nextSteps = [
     { icon: Package, text: "Your order is confirmed and being prepared fresh." },
-    { icon: MessageCircle, text: "We'll reach out on WhatsApp to arrange delivery or pickup." },
-    { icon: CheckCircle2, text: "Your Whisk It drink will be on its way to you!" },
+    { icon: MessageCircle, text: "We'll reach out on WhatsApp to confirm your pickup time." },
+    { icon: MapPin, text: "Head to Adama Akuredza Avenue, Dzorwulu, Accra to collect your order. You arrange your own transport." },
   ];
 
   return (
@@ -228,6 +230,22 @@ function ConfirmationInner() {
               </p>
             </div>
           )}
+
+          {/* ── Pickup location ── */}
+          <div className="bg-[#fff8f0] rounded-2xl border border-[#f9c9c9] text-left px-5 py-4 mb-4 confirm-card">
+            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">Pickup Location</p>
+            <div className="flex items-start gap-3">
+              <div className="w-8 h-8 rounded-full bg-[#fdf2f2] flex items-center justify-center shrink-0">
+                <MapPin size={15} className="text-[#8b1a1a]" />
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-[#1a0808]">{PICKUP_LOCATION}</p>
+                <p className="text-xs text-gray-500 mt-1">
+                  All orders are pickup only. Please arrange your own transport to collect your order.
+                </p>
+              </div>
+            </div>
+          </div>
 
           {/* ── What happens next ── */}
           <div className="bg-white rounded-2xl border border-gray-100 text-left px-5 py-5 mb-7 confirm-card shadow-sm">

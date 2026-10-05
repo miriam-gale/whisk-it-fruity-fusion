@@ -15,6 +15,9 @@ export async function POST(request: NextRequest) {
     }
 
     const secretKey = process.env.PAYSTACK_SECRET_KEY;
+    if (process.env.NODE_ENV === "production" && secretKey?.startsWith("sk_test_")) {
+      console.warn("[VerifyPayment] Production is using a TEST secret key. Update PAYSTACK_SECRET_KEY in Vercel to a live key (sk_live_...).");
+    }
     if (!secretKey || secretKey === "your_paystack_secret_key") {
       // Demo mode
       return NextResponse.json({

@@ -7,7 +7,7 @@ import Link from "next/link";
 import {
   Minus, Plus, ArrowLeft, ArrowRight, Check,
   ShoppingBag, Smartphone, CreditCard, Lock, RefreshCw,
-  AlertCircle, Phone, Shield, Star,
+  AlertCircle, Phone, Shield, Star, MapPin,
 } from "lucide-react";
 import toast from "react-hot-toast";
 import Header from "@/components/Header";
@@ -125,6 +125,8 @@ function OrderPageInner() {
 
   const PRICE = 15;
   const totalAmount = quantity * PRICE;
+  const PICKUP_LOCATION = "Adama Akuredza Avenue, Dzorwulu, Accra, Ghana";
+  const effectiveDeliveryInfo = `Pickup — ${PICKUP_LOCATION}`;
   const orderItems: OrderItem[] = [{
     drinkId: "whisk-it-fruity-fusion",
     drinkName: "Whisk It Fruity Fusion",
@@ -144,8 +146,6 @@ function OrderPageInner() {
     else if (!/^[0-9+\s()-]{7,15}$/.test(customerInfo.phone.trim()))
       errors.phone = "Enter a valid phone number";
     if (!customerInfo.whatsapp.trim()) errors.whatsapp = "WhatsApp number is required";
-    if (!customerInfo.delivery_info.trim())
-      errors.delivery_info = "Delivery or pickup information is required";
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
   }
@@ -174,7 +174,7 @@ function OrderPageInner() {
           customer_name: customerInfo.name,
           phone: customerInfo.phone,
           whatsapp: customerInfo.whatsapp,
-          delivery_info: customerInfo.delivery_info,
+          delivery_info: effectiveDeliveryInfo,
           notes: customerInfo.notes,
           items: orderItems,
           total_amount: totalAmount,
@@ -196,6 +196,10 @@ function OrderPageInner() {
       setProcessingStage(null);
 
       const publicKey = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY;
+
+      if (process.env.NODE_ENV === "production" && publicKey?.startsWith("pk_test_")) {
+        console.warn("[Paystack] Production build is using a TEST public key. Update NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY in Vercel to a live key (pk_live_...).");
+      }
 
       if (!publicKey || publicKey === "your_paystack_public_key") {
         setProcessingStage("verifying");
@@ -513,19 +517,19 @@ function OrderPageInner() {
                   hint="We'll confirm your order on WhatsApp"
                   onChange={(v) => { setCustomerInfo((p) => ({ ...p, whatsapp: v })); setFormErrors((p) => ({ ...p, whatsapp: undefined })); }}
                 />
+                {/* Pickup info */}
                 <div>
-                  <label htmlFor="delivery_info" className="block text-sm font-semibold text-gray-700 mb-1.5">
-                    Delivery / Pickup Information <span className="text-[#8b1a1a]">*</span>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Pickup Location
                   </label>
-                  <textarea
-                    id="delivery_info"
-                    value={customerInfo.delivery_info}
-                    onChange={(e) => { setCustomerInfo((p) => ({ ...p, delivery_info: e.target.value })); setFormErrors((p) => ({ ...p, delivery_info: undefined })); }}
-                    placeholder="Your delivery address or preferred pickup location"
-                    rows={3}
-                    className={`w-full px-4 py-3 rounded-xl border ${formErrors.delivery_info ? "border-red-400 bg-red-50" : "border-gray-200 bg-white"} text-sm focus:outline-none focus:ring-2 focus:ring-[#8b1a1a] focus:border-transparent transition-colors resize-none`}
-                  />
-                  {formErrors.delivery_info && <p className="mt-1 text-xs text-red-500" role="alert">{formErrors.delivery_info}</p>}
+                  <div className="flex items-start gap-2.5 bg-[#fff8f0] border border-[#f9c9c9] rounded-xl px-4 py-3">
+                    <MapPin size={15} color="#8b1a1a" className="shrink-0 mt-0.5" aria-hidden="true" />
+                    <div>
+                      <p className="text-sm font-semibold text-[#1a0808]">{PICKUP_LOCATION}</p>
+                      <p className="text-xs text-gray-500 mt-0.5">All orders are pickup only. You arrange your own transport to collect your order.</p>
+                      <p className="text-xs text-gray-400 mt-0.5">Pickup time confirmed via WhatsApp after your order.</p>
+                    </div>
+                  </div>
                 </div>
                 <div>
                   <label htmlFor="notes" className="block text-sm font-semibold text-gray-700 mb-1.5">
@@ -593,8 +597,8 @@ function OrderPageInner() {
                     <span className="font-medium text-[#1a0808]">GH₵{totalAmount}</span>
                   </div>
                   <div className="flex justify-between text-sm text-gray-500">
-                    <span>Delivery</span>
-                    <span className="text-[#2d6a4f] font-medium text-xs">Arranged on WhatsApp</span>
+                    <span>Pickup</span>
+                    <span className="text-[#2d6a4f] font-medium text-xs">You arrange transport</span>
                   </div>
                 </div>
                 <div className="border-t-2 border-[#f9c9c9] px-5 py-4 bg-[#fdf2f2] flex justify-between items-center">
@@ -618,7 +622,7 @@ function OrderPageInner() {
                     { label: "Name", value: customerInfo.name },
                     { label: "Phone", value: customerInfo.phone },
                     { label: "WhatsApp", value: customerInfo.whatsapp },
-                    { label: "Delivery", value: customerInfo.delivery_info },
+                    { label: "Pickup", value: PICKUP_LOCATION },
                     ...(customerInfo.notes ? [{ label: "Notes", value: customerInfo.notes }] : []),
                   ].map((f) => (
                     <div key={f.label} className="flex gap-3 text-sm">

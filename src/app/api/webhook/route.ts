@@ -9,6 +9,9 @@ export async function POST(request: NextRequest) {
     const rawBody = await request.text();
     const signature = request.headers.get("x-paystack-signature");
     const secretKey = process.env.PAYSTACK_SECRET_KEY;
+    if (process.env.NODE_ENV === "production" && secretKey?.startsWith("sk_test_")) {
+      console.warn("[Webhook] Production is using a TEST secret key. Update PAYSTACK_SECRET_KEY in Vercel to a live key (sk_live_...).");
+    }
 
     if (!secretKey || secretKey === "your_paystack_secret_key") {
       console.error("[Webhook] PAYSTACK_SECRET_KEY is not configured");
