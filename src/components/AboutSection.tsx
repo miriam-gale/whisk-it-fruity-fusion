@@ -1,8 +1,8 @@
 import AnimateOnScroll from "@/components/AnimateOnScroll";
 
 const stats = [
-  { value: "8", label: "Fresh\nIngredients" },
-  { value: "GH₵15", label: "Per\nBottle" },
+  { value: "9", label: "Fresh\nIngredients" },
+  { value: "GH₵20", label: "Per\nBottle" },
   { value: "100%", label: "Real\nFruit" },
 ];
 
@@ -50,15 +50,16 @@ export default function AboutSection() {
             <AnimateOnScroll stagger={2}>
               <div className="space-y-5 text-gray-600 text-base leading-relaxed mb-8">
                 <p>
-                  Whisk It Fruity Fusion is a Ghanaian fresh fruit milk drink brand
+                  Whisk It Fruity Fusion is a Ghanaian fresh fruit drink brand
                   built on a simple idea: that great refreshment should be real,
                   fruity and full of personality.
                 </p>
                 <p>
                   Every bottle is a careful blend of fresh tropical fruits —
                   sweet mango, crisp apple, smooth pawpaw and juicy watermelon —
-                  combined with creamy milk, sago seeds, chia seeds and jelly
-                  for a drink that is as fun to drink as it is delicious.
+                  combined with your choice of creamy milk or rich yoghurt,
+                  plus sago seeds, chia seeds and jelly for a drink that is as
+                  fun to drink as it is delicious.
                 </p>
                 <p>
                   We created Whisk It because we wanted something that tasted
@@ -72,7 +73,7 @@ export default function AboutSection() {
             {/* Brand tags */}
             <AnimateOnScroll stagger={3}>
               <div className="flex flex-wrap gap-2 mb-10">
-                {["Real Fruits", "Fresh Milk", "Fun Texture", "Made in Ghana", "Freshly Prepared"].map((tag) => (
+                {["Real Fruits", "Milk or Yoghurt Base", "Fun Texture", "Made in Ghana", "Freshly Prepared"].map((tag) => (
                   <span
                     key={tag}
                     className="inline-flex items-center bg-white border border-[#f9c9c9] rounded-full px-4 py-1.5 text-xs font-semibold text-[#8b1a1a] shadow-sm"

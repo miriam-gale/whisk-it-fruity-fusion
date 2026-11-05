@@ -11,7 +11,7 @@ import { CONTACT_NUMBERS, WA_MESSAGE } from "@/lib/types";
 interface ConfirmationData {
   orderNumber: string;
   orderId: string;
-  items: { drinkName: string; quantity: number; subtotal: number }[];
+  items: { drinkName: string; quantity: number; price: number; subtotal: number }[];
   total: number;
   customerName: string;
   reference?: string;
@@ -185,7 +185,7 @@ function ConfirmationInner() {
                       <div>
                         <p className="text-sm font-semibold text-[#1a0808]">Whisk It Fruity Fusion</p>
                         <p className="text-xs text-gray-400 mt-0.5">{item.drinkName}</p>
-                        <p className="text-xs text-gray-400">{item.quantity} bottle{item.quantity !== 1 ? "s" : ""} × GH₵15</p>
+                        <p className="text-xs text-gray-400">{item.quantity} bottle{item.quantity !== 1 ? "s" : ""} × GH₵{item.price}</p>
                       </div>
                     </div>
                     <p className="font-bold text-[#8b1a1a] shrink-0">GH₵{item.subtotal}</p>

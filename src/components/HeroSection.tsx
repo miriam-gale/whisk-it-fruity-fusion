@@ -49,7 +49,7 @@ export default function HeroSection() {
               aria-hidden="true"
             />
             <span className="text-[11px] font-bold text-[#8b1a1a] uppercase tracking-[0.18em]">
-              Fresh Fruit Milk Drink · Ghana
+              Fresh Fruit Fusion · Ghana
             </span>
           </div>
 
@@ -68,8 +68,8 @@ export default function HeroSection() {
 
           {/* Description */}
           <p className="hero-sub text-base sm:text-lg text-gray-600 leading-relaxed mb-6 max-w-[400px]">
-            Refreshing fruit milk drinks made with real fruits, milk,
-            sago seeds, chia seeds and jelly.
+            Refreshing fruit drinks made with real fruits, sago seeds,
+            chia seeds and jelly — choose your base: fresh milk or yoghurt.
           </p>
 
           {/* Price */}
@@ -78,7 +78,7 @@ export default function HeroSection() {
               className="text-3xl font-bold text-[#8b1a1a]"
               style={{ fontFamily: "var(--font-playfair)" }}
             >
-              GH₵15
+              GH₵20
             </span>
             <span className="text-gray-500 text-sm font-medium">/ bottle</span>
           </div>

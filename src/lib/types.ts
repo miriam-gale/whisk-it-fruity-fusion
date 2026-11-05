@@ -42,37 +42,22 @@ export interface CustomerInfo {
 
 export const DRINKS: Drink[] = [
   {
-    id: "mango-apple",
-    slug: "mango-apple",
-    name: "Mango & Apple",
-    description: "Sweet mango blended with crisp, refreshing apple.",
-    price: 15,
-    images: ["/ingredients/mango.png", "/ingredients/apple.png"],
-  },
-  {
-    id: "pawpaw-apple",
-    slug: "pawpaw-apple",
-    name: "Pawpaw & Apple",
-    description: "Creamy pawpaw paired with the refreshing taste of apple.",
-    price: 15,
-    images: ["/ingredients/pawpaw.png", "/ingredients/apple.png"],
-  },
-  {
-    id: "watermelon-apple",
-    slug: "watermelon-apple",
-    name: "Watermelon & Apple",
-    description: "Juicy watermelon combined with crisp, refreshing apple.",
-    price: 15,
-    images: ["/ingredients/watermelon.png", "/ingredients/apple.png"],
-  },
-  {
-    id: "pawpaw-mango-watermelon",
-    slug: "pawpaw-mango-watermelon",
-    name: "Pawpaw, Mango & Watermelon",
+    id: "milk-based",
+    slug: "milk-based",
+    name: "Milk-Based",
     description:
-      "A colourful tropical fusion of pawpaw, mango and watermelon.",
-    price: 15,
-    images: ["/ingredients/pawpaw.png", "/ingredients/mango.png", "/ingredients/watermelon.png"],
+      "Tropical fruits blended with fresh creamy milk for a smooth, satisfying drink.",
+    price: 20,
+    images: ["/ingredients/milk.png"],
+  },
+  {
+    id: "yoghurt-based",
+    slug: "yoghurt-based",
+    name: "Yoghurt-Based",
+    description:
+      "Tropical fruits blended with rich yoghurt for a tangy, creamy twist.",
+    price: 20,
+    images: ["/ingredients/yoghurt.png"],
   },
 ];
 

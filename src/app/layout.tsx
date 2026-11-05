@@ -1,30 +1,44 @@
+
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import localFont from "next/font/local";
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
 
-const inter = Inter({
+const inter = localFont({
+  src: [
+    {
+      path: "../../public/fonts/inter-latin.woff2",
+      weight: "100 900",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/inter-latin-ext.woff2",
+      weight: "100 900",
+      style: "normal",
+    },
+  ],
   variable: "--font-inter",
-  subsets: ["latin"],
   display: "swap",
 });
 
-const playfair = Playfair_Display({
+const playfair = localFont({
+  src: "../../public/fonts/playfair-display.woff2",
+  weight: "400 900",
+  style: "normal",
   variable: "--font-playfair",
-  subsets: ["latin"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Whisk It Fruity Fusion | Fresh Fruit Milk Drink – Ghana",
+  title: "Whisk It Fruity Fusion | Fresh Fruit Drink – Ghana",
   description:
-    "Whisk It Fruity Fusion offers delicious fresh fruit milk drinks made with real mango, apple, pawpaw, watermelon, milk, sago seeds, chia seeds and jelly. Order online for GH₵15 per bottle.",
+    "Whisk It Fruity Fusion offers fresh fruit drinks made with real mango, apple, pawpaw, watermelon, your choice of milk or yoghurt base, sago seeds, chia seeds and jelly. Order online for GH₵20 per bottle.",
   keywords:
-    "Whisk It, Fruity Fusion, fresh fruit milk drink, Ghana, mango, pawpaw, watermelon, apple, sago seeds, chia seeds",
+    "Whisk It, Fruity Fusion, fresh fruit drink, Ghana, mango, pawpaw, watermelon, apple, milk, yoghurt, sago seeds, chia seeds",
   openGraph: {
-    title: "Whisk It Fruity Fusion | Fresh Fruit Milk Drink",
+    title: "Whisk It Fruity Fusion | Fresh Fruit Drink",
     description:
-      "Fresh fruit milk drinks made with real fruits. Order online for GH₵15 per bottle.",
+      "Fresh fruit drinks made with real fruits and your choice of milk or yoghurt base. Order online for GH₵20 per bottle.",
     type: "website",
   },
 };
@@ -37,19 +51,8 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
       <body className="min-h-screen flex flex-col font-sans antialiased">
-        <Toaster
-          position="top-center"
-          toastOptions={{
-            duration: 4000,
-            style: {
-              background: "#8b1a1a",
-              color: "#fff",
-              borderRadius: "8px",
-              fontFamily: "var(--font-inter)",
-            },
-          }}
-        />
         {children}
+        <Toaster position="top-right" />
       </body>
     </html>
   );

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, Suspense } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Script from "next/script";
 import Link from "next/link";
 import {
@@ -12,7 +12,7 @@ import {
 import toast from "react-hot-toast";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { type CustomerInfo, type OrderItem } from "@/lib/types";
+import { type CustomerInfo, type OrderItem, DRINKS } from "@/lib/types";
 
 type Step = "select" | "info" | "summary";
 type PaymentMethod = "mobile_money" | "card";
@@ -103,6 +103,12 @@ function VerifyingOverlay() {
 
 function OrderPageInner() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const urlFlavour = searchParams.get("flavour") ?? "milk-based";
+  const [selectedBase, setSelectedBase] = useState<string>(
+    DRINKS.some(d => d.id === urlFlavour) ? urlFlavour : "milk-based"
+  );
+  const selectedDrink = DRINKS.find(d => d.id === selectedBase) ?? DRINKS[0];
   const [step, setStep] = useState<Step>("select");
   const [prevStep, setPrevStep] = useState<Step | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
@@ -123,13 +129,13 @@ function OrderPageInner() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  const PRICE = 15;
+  const PRICE = selectedDrink.price;
   const totalAmount = quantity * PRICE;
   const PICKUP_LOCATION = "Adama Akuredza Avenue, Dzorwulu, Accra, Ghana";
   const effectiveDeliveryInfo = `Pickup — ${PICKUP_LOCATION}`;
   const orderItems: OrderItem[] = [{
-    drinkId: "whisk-it-fruity-fusion",
-    drinkName: "Whisk It Fruity Fusion",
+    drinkId: selectedDrink.id,
+    drinkName: selectedDrink.name,
     quantity,
     price: PRICE,
     subtotal: quantity * PRICE,
@@ -311,7 +317,7 @@ function OrderPageInner() {
   }
 
   const steps = [
-    { key: "select" as Step, label: "Choose Quantity" },
+    { key: "select" as Step, label: "Choose Base" },
     { key: "info" as Step, label: "Your Details" },
     { key: "summary" as Step, label: "Review & Pay" },
   ];
@@ -343,7 +349,7 @@ function OrderPageInner() {
           <h1 className="text-3xl sm:text-4xl font-bold text-[#1a0808]" style={{ fontFamily: "var(--font-playfair)" }}>
             Order Your Whisk It
           </h1>
-          <p className="text-gray-400 text-sm mt-1.5">GH₵15 per bottle · Fresh fruit milk drink</p>
+          <p className="text-gray-400 text-sm mt-1.5">GH₵20 per bottle · Your choice of base</p>
 
           {/* Progress stepper */}
           <div className="flex items-center justify-center gap-0 mt-7">
@@ -381,7 +387,7 @@ function OrderPageInner() {
 
         <div className="max-w-2xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
 
-          {/* ── STEP 1: Choose Quantity ── */}
+          {/* ── STEP 1: Choose Base ── */}
           {step === "select" && (
             <div key="select" className={`space-y-4 ${stepAnimClass}`}>
               {/* Product image + quantity */}
@@ -404,15 +410,52 @@ function OrderPageInner() {
                       <h2 className="text-xl font-bold text-[#1a0808]" style={{ fontFamily: "var(--font-playfair)" }}>
                         Whisk It Fruity Fusion
                       </h2>
-                      <p className="text-gray-400 text-sm mt-0.5">Fresh fruit milk drink · Made in Ghana</p>
+                      <p className="text-gray-400 text-sm mt-0.5">Fresh fruit drink · Made in Ghana</p>
                       <div className="flex items-center gap-1 mt-1.5">
                         {[1,2,3,4,5].map(s => <Star key={s} size={11} fill="#f59e0b" className="text-amber-400" />)}
                         <span className="text-xs text-gray-400 ml-1">Handmade fresh</span>
                       </div>
                     </div>
                     <div className="text-right shrink-0">
-                      <p className="text-2xl font-bold text-[#8b1a1a]" style={{ fontFamily: "var(--font-playfair)" }}>GH₵15</p>
+                      <p className="text-2xl font-bold text-[#8b1a1a]" style={{ fontFamily: "var(--font-playfair)" }}>GH₵{PRICE}</p>
                       <p className="text-xs text-gray-400">per bottle</p>
+                    </div>
+                  </div>
+
+                  {/* Base selector */}
+                  <div className="mb-5">
+                    <p className="text-sm font-semibold text-gray-600 mb-3">Choose Your Base</p>
+                    <div className="grid grid-cols-2 gap-3">
+                      {DRINKS.map((drink) => (
+                        <button
+                          key={drink.id}
+                          type="button"
+                          onClick={() => setSelectedBase(drink.id)}
+                          className={`relative flex flex-col gap-2 p-3.5 rounded-2xl border-2 text-left transition-all ${
+                            selectedBase === drink.id
+                              ? "border-[#8b1a1a] bg-[#fdf2f2]"
+                              : "border-gray-100 bg-white hover:border-gray-200 hover:bg-gray-50"
+                          }`}
+                          aria-pressed={selectedBase === drink.id}
+                        >
+                          <div className="flex items-center gap-2.5 w-full">
+                            <img
+                              src={drink.images[0]}
+                              alt={drink.name}
+                              className="w-8 h-8 rounded-full object-cover shrink-0"
+                            />
+                            <p className={`text-sm font-bold leading-snug flex-1 ${selectedBase === drink.id ? "text-[#8b1a1a]" : "text-[#1a0808]"}`}>
+                              {drink.name}
+                            </p>
+                            {selectedBase === drink.id && (
+                              <div className="w-5 h-5 rounded-full bg-[#8b1a1a] flex items-center justify-center shrink-0">
+                                <Check size={10} color="#fff" strokeWidth={3} />
+                              </div>
+                            )}
+                          </div>
+                          <p className="text-xs text-gray-400 leading-snug">{drink.description}</p>
+                        </button>
+                      ))}
                     </div>
                   </div>
 
@@ -451,7 +494,7 @@ function OrderPageInner() {
                     <ShoppingBag size={16} className="text-[#8b1a1a]" />
                     <div>
                       <p className="text-sm font-semibold text-[#1a0808]">Whisk It Fruity Fusion</p>
-                      <p className="text-xs text-gray-400">{quantity} bottle{quantity !== 1 ? "s" : ""} × GH₵15</p>
+                      <p className="text-xs text-gray-400">{selectedDrink.name} · {quantity} bottle{quantity !== 1 ? "s" : ""} × GH₵{PRICE}</p>
                     </div>
                   </div>
                   <div className="text-right">
@@ -583,11 +626,11 @@ function OrderPageInner() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="font-semibold text-[#1a0808] text-sm">Whisk It Fruity Fusion</p>
-                    <p className="text-xs text-gray-400 mt-0.5">Fresh fruit milk drink · Made in Ghana</p>
+                    <p className="text-xs text-gray-400 mt-0.5">{selectedDrink.name} · Made in Ghana</p>
                   </div>
                   <div className="text-right shrink-0">
                     <p className="font-bold text-[#8b1a1a]">GH₵{totalAmount}</p>
-                    <p className="text-xs text-gray-400">{quantity} × GH₵15</p>
+                    <p className="text-xs text-gray-400">{quantity} × GH₵{PRICE}</p>
                   </div>
                 </div>
 

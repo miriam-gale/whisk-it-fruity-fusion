@@ -145,6 +145,7 @@ export async function POST(request: NextRequest) {
       notes: updatedOrder.notes ?? undefined,
       flavour: firstItem?.drinkName ?? "Whisk It Fruity Fusion",
       quantity: firstItem?.quantity ?? 1,
+      unitPrice: firstItem?.price ?? 20,
       totalAmount: updatedOrder.total_amount,
       paymentMethod: updatedOrder.payment_method ?? "unknown",
       paymentReference: reference,

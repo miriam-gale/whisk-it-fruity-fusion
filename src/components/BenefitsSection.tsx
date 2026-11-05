@@ -13,8 +13,8 @@ const features = [
     Icon: Droplets,
     color: "#2d5a8e",
     bg: "#eff6ff",
-    title: "Creamy Milk Base",
-    body: "Fresh milk gives every combination a smooth and satisfying creaminess.",
+    title: "Your Choice of Base",
+    body: "Choose fresh milk for a classic creamy smoothness, or yoghurt for a richer, tangier twist.",
   },
   {
     Icon: Wind,
@@ -34,8 +34,8 @@ const features = [
     Icon: GlassWater,
     color: "#8b1a1a",
     bg: "#fdf2f2",
-    title: "Four Flavour Options",
-    body: "Choose from four fruit combinations to find your perfect match.",
+    title: "Two Base Options",
+    body: "Choose milk-based or yoghurt-based — both packed with real tropical fruits.",
   },
   {
     Icon: MapPin,

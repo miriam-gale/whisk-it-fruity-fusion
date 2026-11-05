@@ -9,6 +9,7 @@ interface OrderNotificationPayload {
   notes?: string;
   flavour: string;
   quantity: number;
+  unitPrice: number;
   totalAmount: number;
   paymentMethod: string;
   paymentReference: string;
@@ -69,7 +70,7 @@ function buildEmailHtml(o: OrderNotificationPayload): string {
               <tr><td style="padding:5px 0;font-size:14px;color:#888;width:120px;">Product</td><td style="padding:5px 0;font-size:14px;color:#1a1a1a;font-weight:600;">Whisk It Fruity Fusion</td></tr>
               <tr><td style="padding:5px 0;font-size:14px;color:#888;">Flavour</td><td style="padding:5px 0;font-size:14px;color:#1a1a1a;font-weight:600;">${o.flavour}</td></tr>
               <tr><td style="padding:5px 0;font-size:14px;color:#888;">Quantity</td><td style="padding:5px 0;font-size:14px;color:#1a1a1a;font-weight:600;">${o.quantity} bottle${o.quantity !== 1 ? "s" : ""}</td></tr>
-              <tr><td style="padding:5px 0;font-size:14px;color:#888;">Unit Price</td><td style="padding:5px 0;font-size:14px;color:#1a1a1a;font-weight:600;">GH&#8373;15</td></tr>
+              <tr><td style="padding:5px 0;font-size:14px;color:#888;">Unit Price</td><td style="padding:5px 0;font-size:14px;color:#1a1a1a;font-weight:600;">GH&#8373;${o.unitPrice}</td></tr>
             </table>
 
             <!-- Total -->
@@ -124,7 +125,7 @@ ORDER
 Product: Whisk It Fruity Fusion
 Flavour: ${o.flavour}
 Quantity: ${o.quantity} bottle${o.quantity !== 1 ? "s" : ""}
-Unit Price: GH₵15
+Unit Price: GH₵${o.unitPrice}
 Total: GH₵${o.totalAmount}
 
 PAYMENT

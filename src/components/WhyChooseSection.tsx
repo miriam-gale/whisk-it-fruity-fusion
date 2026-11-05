@@ -4,7 +4,7 @@ import { Leaf, Tag, ShoppingBag, MessageCircle, MapPin, Check } from "lucide-rea
 
 const reasons = [
   { Icon: Leaf,          color: "#2d6a4f", bg: "#f0f7f4", text: "Real, fresh ingredients" },
-  { Icon: Tag,           color: "#8b1a1a", bg: "#fdf2f2", text: "GH₵15 per bottle" },
+  { Icon: Tag,           color: "#8b1a1a", bg: "#fdf2f2", text: "GH₵20 per bottle" },
   { Icon: ShoppingBag,   color: "#2d5a8e", bg: "#eff6ff", text: "Easy online ordering" },
   { Icon: MessageCircle, color: "#276749", bg: "#f0fff4", text: "WhatsApp support" },
   { Icon: MapPin,        color: "#8b1a1a", bg: "#fdf2f2", text: "Proudly Ghanaian" },
@@ -39,9 +39,9 @@ export default function WhyChooseSection() {
 
             <AnimateOnScroll stagger={2}>
               <p className="text-gray-500 text-base sm:text-lg leading-relaxed mb-8 max-w-md">
-                We make it easy to enjoy a premium, freshly prepared fruit milk
-                drink — delivered to you, made with real ingredients, at an
-                honest price.
+                We make it easy to enjoy a premium, freshly prepared fruit drink
+                with your choice of milk or yoghurt base — made with real
+                ingredients, at an honest price.
               </p>
             </AnimateOnScroll>
 
@@ -55,7 +55,7 @@ export default function WhyChooseSection() {
                   className="text-5xl font-bold text-[#8b1a1a]"
                   style={{ fontFamily: "var(--font-playfair)" }}
                 >
-                  GH₵15
+                  GH₵20
                 </span>
                 <span className="text-gray-500 text-sm font-medium">per bottle</span>
               </div>
@@ -98,7 +98,7 @@ export default function WhyChooseSection() {
                   <Check size={14} color="#fff" strokeWidth={2.5} />
                 </div>
                 <p className="text-sm text-gray-600 leading-snug">
-                  <span className="font-bold text-[#1a0808]">Four flavour combinations</span>{" "}
+                  <span className="font-bold text-[#1a0808]">Two base options — milk or yoghurt</span>{" "}
                   — each one crafted to be refreshing, fruity and satisfying.
                 </p>
               </div>

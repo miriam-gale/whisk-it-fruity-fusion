@@ -19,15 +19,15 @@ export default function DrinksSection() {
             className="text-3xl sm:text-4xl lg:text-[2.75rem] font-bold text-[#1a0808] mb-4 leading-tight"
             style={{ fontFamily: "var(--font-playfair)" }}
           >
-            Our Flavours
+            Choose Your Base
           </h2>
           <p className="text-gray-500 text-base sm:text-lg max-w-md mx-auto">
-            Four delicious combinations. One fruity experience.
+            Two base options. One fruity experience.
           </p>
         </div>
 
         {/* Drinks Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-2xl mx-auto">
           {DRINKS.map((drink) => (
             <article
               key={drink.id}
@@ -79,7 +79,7 @@ export default function DrinksSection() {
                       className="text-2xl font-bold text-[#8b1a1a]"
                       style={{ fontFamily: "var(--font-playfair)" }}
                     >
-                      GH₵15
+                      GH₵{drink.price}
                     </span>
                     <span className="text-xs text-gray-400 ml-1">/ bottle</span>
                   </div>
@@ -99,8 +99,8 @@ export default function DrinksSection() {
         {/* Bottom CTA */}
         <div className="text-center mt-12">
           <p className="text-gray-400 text-sm mb-5">
-            Every combination is{" "}
-            <span className="font-semibold text-[#8b1a1a]">GH₵15 per bottle</span>
+            Both options are{" "}
+            <span className="font-semibold text-[#8b1a1a]">GH₵20 per bottle</span>
           </p>
           <Link
             href="/order"

@@ -8,7 +8,7 @@ import { DRINKS } from "@/lib/types";
 export const metadata: Metadata = {
   title: "About – Whisk It Fruity Fusion",
   description:
-    "Learn about Whisk It Fruity Fusion — a Ghanaian fresh fruit milk drink brand crafted with real fruits, milk, sago seeds, chia seeds and jelly.",
+    "Learn about Whisk It Fruity Fusion — a Ghanaian fresh fruit drink brand crafted with real fruits, your choice of milk or yoghurt base, sago seeds, chia seeds and jelly.",
 };
 
 export default function AboutPage() {
@@ -61,9 +61,9 @@ export default function AboutPage() {
                   </p>
                   <p>
                     We combine the richness of tropical fruits like mango,
-                    pawpaw, watermelon and apple with the creaminess of fresh
-                    milk, and finish each bottle with fun, playful textures from
-                    sago seeds, chia seeds and jelly.
+                    pawpaw, watermelon and apple with your choice of fresh milk
+                    or yoghurt, and finish each bottle with fun, playful
+                    textures from sago seeds, chia seeds and jelly.
                   </p>
                   <p>
                     Our drinks are made for everyone — whether you want a
@@ -170,27 +170,23 @@ export default function AboutPage() {
               className="text-3xl sm:text-4xl font-bold text-[#1a0808] mb-4"
               style={{ fontFamily: "var(--font-playfair)" }}
             >
-              Our Four Combinations
+              Choose Your Base
             </h2>
             <p className="text-gray-500 text-base mb-10">
-              Each one is GH₵15 and is packed with flavour.
+              GH₵20 per bottle — choose the base that suits you best.
             </p>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10 max-w-sm sm:max-w-none mx-auto">
               {DRINKS.map((drink) => (
                 <div
                   key={drink.id}
                   className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm"
                 >
-                  {/* Split ingredient images */}
-                  <div className="h-24 flex overflow-hidden rounded-t-2xl">
-                    {drink.images.slice(0, 2).map((src) => (
-                      <img
-                        key={src}
-                        src={src}
-                        alt=""
-                        className="flex-1 h-full object-cover"
-                      />
-                    ))}
+                  <div className="h-24 overflow-hidden rounded-t-2xl">
+                    <img
+                      src={drink.images[0]}
+                      alt={drink.name}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   <div className="px-3 py-3 text-center">
                     <p
@@ -199,7 +195,7 @@ export default function AboutPage() {
                     >
                       {drink.name}
                     </p>
-                    <p className="text-xs text-gray-400 mt-0.5">GH₵15</p>
+                    <p className="text-xs text-gray-400 mt-0.5">GH₵{drink.price}</p>
                   </div>
                 </div>
               ))}

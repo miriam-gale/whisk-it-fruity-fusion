@@ -110,8 +110,8 @@ export default function ContactPage() {
                 Order Online in Minutes
               </h3>
               <p className="text-red-100 text-base mb-8 max-w-sm mx-auto">
-                Choose your flavour and pay securely online. Four combinations
-                at GH₵15 each.
+                Choose your base — milk or yoghurt — and pay securely online.
+                GH₵20 per bottle.
               </p>
               <a
                 href="/order"
