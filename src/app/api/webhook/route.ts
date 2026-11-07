@@ -20,8 +20,9 @@ export async function POST(request: NextRequest) {
 
     // Reject requests with no signature header
     if (!signature) {
-      return NextResponse.json({ error: "Missing signature" }, { status: 401 });
-    }
+  console.error("[Webhook] Paystack signature header is missing");
+  return NextResponse.json({ error: "Missing signature" }, { status: 401 });
+}
 
     // Verify HMAC-SHA512 signature
     const expectedHash = crypto
@@ -30,8 +31,9 @@ export async function POST(request: NextRequest) {
       .digest("hex");
 
     if (expectedHash !== signature) {
-      return NextResponse.json({ error: "Invalid signature" }, { status: 401 });
-    }
+  console.error("[Webhook] Signature mismatch");
+  return NextResponse.json({ error: "Invalid signature" }, { status: 401 });
+}
 
     // Safe to parse now that the body is verified
     const event = JSON.parse(rawBody) as {
