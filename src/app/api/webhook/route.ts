@@ -30,6 +30,37 @@ export async function POST(request: NextRequest) {
       .update(rawBody)
       .digest("hex");
 
+    // ── TEMPORARY DIAGNOSTIC — REMOVE after root cause confirmed ──────────────
+    // Logs ONLY shape facts + match booleans. Never logs the key, the
+    // signature, or any HMAC hash. Safe to run on live events.
+    {
+      const trimmedKey = secretKey.trim();
+      const trimmedHash = crypto
+        .createHmac("sha512", trimmedKey)
+        .update(rawBody)
+        .digest("hex");
+      const keyMode = secretKey.startsWith("sk_live_")
+        ? "sk_live_"
+        : secretKey.startsWith("sk_test_")
+        ? "sk_test_"
+        : "neither";
+      console.log(
+        "[Webhook Diag] " +
+          JSON.stringify({
+            keyMode,
+            keyLength: secretKey.length,
+            hasLeadingOrTrailingWhitespace:
+              secretKey.length !== trimmedKey.length,
+            hasWrappingQuotes:
+              /^["']/.test(secretKey) || /["']$/.test(secretKey),
+            rawKeyMatchesSignature: expectedHash === signature,
+            trimmedKeyMatchesSignature: trimmedHash === signature,
+            signatureLength: signature.length,
+          })
+      );
+    }
+    // ──────────────────────────────────────────────────────────────────────────
+
     if (expectedHash !== signature) {
   console.error("[Webhook] Signature mismatch");
   return NextResponse.json({ error: "Invalid signature" }, { status: 401 });
